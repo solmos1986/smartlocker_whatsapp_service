@@ -16,12 +16,7 @@ const generate = async (code) => {
         fileName
     );
 
-    console.log("Generando:", filePath);
-
     await QRCode.toFile(filePath, code);
-
-    console.log("QR generado:", filePath);
-console.log("Existe:", fs.existsSync(filePath));
 
     return fileName;
 };

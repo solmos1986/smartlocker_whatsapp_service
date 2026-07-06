@@ -10,8 +10,7 @@ const sendImage = async (phone, qrFile) => {
             process.env.QR_STORAGE,
             qrFile
         );
-            console.log("Leyendo:", filePath);
-console.log("Existe:", fs.existsSync(filePath));
+           
         const imageBuffer = fs.readFileSync(filePath);
 
         const base64Image = imageBuffer.toString('base64');
