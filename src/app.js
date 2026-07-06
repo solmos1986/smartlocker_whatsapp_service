@@ -18,5 +18,10 @@ app.use(
     '/storage',
     express.static(path.join(__dirname, '..', 'storage'))
 );
+app.get('/health', (req, res) => {
+    res.status(200).json({
+        status: 'ok'
+    });
+});
 
 module.exports = app;
