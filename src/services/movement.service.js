@@ -28,13 +28,8 @@ const getMovement = async (codigo) => {
 
     const result =
         await whatsappService.sendImage(
-
             contact.celular,
-
-            imageUrl,
-
-            process.env.WHATSAPP_CAPTION
-
+            qrFile
         );
 
     whatsappResults.push({

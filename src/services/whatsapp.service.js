@@ -1,43 +1,40 @@
+const fs = require('fs');
+const path = require('path');
 const axios = require('axios');
-const evolution = require('../config/evolution');
 
-const sendImage = async (phone, imageUrl, caption) => {
-
-    const url =
-        `${evolution.baseUrl}/message/sendMedia/${evolution.instance}`;
-
-    const payload = {
-
-        number: phone,
-
-        mediatype: "image",
-
-        mimetype: "image/png",
-
-        caption: caption,
-
-        media: imageUrl,
-
-        fileName: imageUrl.split('/').pop()
-
-    };
-
-    const headers = {
-
-        apikey: evolution.apiKey,
-
-        "Content-Type": "application/json"
-
-    };
+const sendImage = async (phone, qrFile) => {
 
     try {
 
+        const filePath = path.join(
+            process.env.QR_STORAGE,
+            qrFile
+        );
+
+        const imageBuffer = fs.readFileSync(filePath);
+
+        const base64Image = imageBuffer.toString('base64');
+
         const response = await axios.post(
-            url,
-            payload,
+
+            `${process.env.EVOLUTION_URL}/message/sendMedia/${process.env.EVOLUTION_INSTANCE}`,
+
             {
-                headers
+                number: phone,
+                mediatype: 'image',
+                mimetype: 'image/png',
+                caption: 'Tiene un paquete pendiente por recoger.',
+                media: base64Image,
+                fileName: qrFile
+            },
+
+            {
+                headers: {
+                    apikey: process.env.EVOLUTION_API_KEY,
+                    'Content-Type': 'application/json'
+                }
             }
+
         );
 
         return {
@@ -48,22 +45,25 @@ const sendImage = async (phone, imageUrl, caption) => {
 
         };
 
-    }
-    catch (error) {
-
-        console.error("===== ERROR EVOLUTION API =====");
-        console.error(error);
-        console.error("===============================");
+    } catch (error) {
 
         return {
+
             success: false,
-            message: error.message,
-            code: error.code,
-            status: error.response?.status,
-            data: error.response?.data || null
+
+            message:
+                error.response?.data ||
+                error.message
+
         };
 
     }
+
+};
+
+module.exports = {
+
+    sendImage
 
 };
 
