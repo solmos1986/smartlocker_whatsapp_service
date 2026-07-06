@@ -21,7 +21,7 @@ const getMovement = async (codigo) => {
 
     const imageUrl =
     `${process.env.STATIC_FILES_URL}/${qrFile}`;
-
+    
     const whatsappResults = [];
 
     for (const contact of contacts) {
