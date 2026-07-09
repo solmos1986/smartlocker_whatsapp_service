@@ -57,6 +57,7 @@ const findDepartmentContacts = async (departmentId) => {
         WHERE
             u.department_id = ?
             AND u.state = 1
+            AND u.has_whatsapp = 1
         `,
         [departmentId]
     );

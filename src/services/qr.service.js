@@ -6,7 +6,7 @@ const generate = async (code) => {
 
     const fileName = `${code}.png`;
 
-    console.log("QR_STORAGE:", process.env.QR_STORAGE);
+   
 
     // Crear el directorio si no existe
     fs.mkdirSync(process.env.QR_STORAGE, { recursive: true });
