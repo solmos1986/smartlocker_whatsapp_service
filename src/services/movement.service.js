@@ -22,23 +22,37 @@ const getMovement = async (codigo) => {
     const imageUrl =
     `${process.env.STATIC_FILES_URL}/${qrFile}`;
     
-    const whatsappResults = [];
+    // const whatsappResults = [];
+
+    // for (const contact of contacts) {
+
+    // const result =
+    //     await whatsappService.sendImage(
+    //         contact.celular,
+    //         qrFile
+    //     );
+
+    // whatsappResults.push({
+
+    //     phone: contact.celular,
+
+    //     result
+
+    // });
+
+    // }
+    const whatsappQueue =
+        require('../queue/whatsapp.queue');
 
     for (const contact of contacts) {
 
-    const result =
-        await whatsappService.sendImage(
-            contact.celular,
+        await whatsappQueue.enqueue({
+
+            phone: contact.celular,
+
             qrFile
-        );
 
-    whatsappResults.push({
-
-        phone: contact.celular,
-
-        result
-
-    });
+        });
 
     }
     return {
@@ -53,7 +67,7 @@ const getMovement = async (codigo) => {
 
     imageUrl,
 
-    whatsapp: whatsappResults
+    queued: contacts.length
 
     };
 

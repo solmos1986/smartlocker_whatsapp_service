@@ -28,6 +28,12 @@ const sendImage = async (phone, qrFile) => {
         console.log('Archivo:', filePath);
         console.log('Tamaño:', stats.size, 'bytes');
 
+        const url =
+            `${process.env.EVOLUTION_URL}/message/sendMedia/${process.env.EVOLUTION_INSTANCE}`;
+
+        console.log('URL:', url);
+       
+
         const form = new FormData();
 
         form.append(
@@ -46,20 +52,20 @@ const sendImage = async (phone, qrFile) => {
         );
 
         form.append(
+            'fileName',
+            qrFile
+        );
+
+        form.append(
             'caption',
             'Tiene un paquete pendiente por recoger.'
         );
-
-        // form.append(
-        //     'fileName',
-        //     qrFile
-        // );
 
         const start = Date.now();
 
         const response = await axios.post(
 
-            `${process.env.EVOLUTION_URL}/message/sendMedia/${process.env.EVOLUTION_INSTANCE}`,
+            url,
 
             form,
 
@@ -73,9 +79,9 @@ const sendImage = async (phone, qrFile) => {
 
                 },
 
-                timeout: 30000,
+                maxBodyLength: Infinity,
 
-                maxBodyLength: Infinity
+                timeout: 30000
 
             }
 
@@ -83,8 +89,9 @@ const sendImage = async (phone, qrFile) => {
 
         const elapsed = Date.now() - start;
 
+        console.log('========================================');
         console.log('Evolution respondió en', elapsed, 'ms');
-        console.log(response.data);
+        console.dir(response.data, { depth: null });
         console.log('========================================');
 
         return {
@@ -100,16 +107,19 @@ const sendImage = async (phone, qrFile) => {
     } catch (error) {
 
         console.log('========================================');
-        console.log('Error enviando WhatsApp');
-        console.log(error.code);
-        console.log(error.message);
+        console.log('===== ERROR EVOLUTION API =====');
+
+        console.log('CODE:', error.code);
+        console.log('MESSAGE:', error.message);
 
         if (error.response) {
 
-            console.log('Status:', error.response.status);
-            console.log(error.response.data);
+            console.log('STATUS:', error.response.status);
+            console.dir(error.response.data, { depth: null });
 
         }
+
+        console.dir(error, { depth: 2 });
 
         console.log('========================================');
 
