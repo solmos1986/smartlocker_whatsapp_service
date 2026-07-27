@@ -61,7 +61,7 @@ const findDepartmentContacts = async (departmentId) => {
         `,
         [departmentId]
     );
-
+    console.log('contactos del departamento: ', rows);
     return rows;
 
 };
