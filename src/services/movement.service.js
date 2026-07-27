@@ -16,6 +16,7 @@ const getMovement = async (codigo) => {
     const contacts = await movementRepository.findDepartmentContacts(
         movement.department_id
     );
+    console.log('contactosSSSSSSSSSSSSSS: ', contacts);
 
     const qrFile = await qrService.generate(codigo);
 
