@@ -3,7 +3,7 @@ const qrService = require('./qr.service');
 const whatsappService = require('./whatsapp.service');
 
 const getMovement = async (codigo) => {
-
+    console.log(">>> Entró a getMovement:", codigo);
     const movement = await movementRepository.findMovementByCode(codigo);
 
     if (!movement) {

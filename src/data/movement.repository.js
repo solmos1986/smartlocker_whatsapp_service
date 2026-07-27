@@ -32,7 +32,7 @@ const findMovementByCode = async (codigo) => {
  * Obtiene los contactos activos de un departamento.
  */
 const findDepartmentContacts = async (departmentId) => {
-
+    console.log('llegue movemente repository a buscar departamento Id', departmentId);
     const [rows] = await db.execute(
         `
         SELECT

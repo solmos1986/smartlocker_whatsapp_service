@@ -51,10 +51,10 @@ const sendImage = async (phone, qrFile) => {
             fs.createReadStream(filePath)
         );
 
-        form.append(
-            'fileName',
-            qrFile
-        );
+        // form.append(
+        //     'fileName',
+        //     qrFile
+        // );
 
         form.append(
             'caption',
