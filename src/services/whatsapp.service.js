@@ -62,7 +62,11 @@ const sendImage = async (phone, qrFile) => {
         );
 
         const start = Date.now();
-
+        console.log('consolessss antes de axiosss post');
+console.dir(form.getHeaders(), { depth: null });
+console.log(process.env.EVOLUTION_API_KEY);
+console.dir(form, { depth: 2 });
+console.log(form._streams);
         const response = await axios.post(
 
             url,
